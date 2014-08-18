@@ -2,7 +2,7 @@ $(document).ready(function() {
     
     /*Diese Daten mŸssen angepasst werden*/
     var username = "mfanafuthi";
-    var repname = "mfanafuthi.github.io/oph";
+    var repname = "oph";
     var branch = "gh-pages"
     var cover = "Title"
     var tableOfContent="Table of Content"
