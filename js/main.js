@@ -350,7 +350,6 @@ $(document).ready(function() {
                 lines=0;
             }
             for(i=0; i<lines; i++){
-                console.log(i);
                 doc.text(startX, y, textArray[i])
                 y=y+fontsize*mmToPt;
             }
