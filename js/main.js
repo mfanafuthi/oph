@@ -1,13 +1,13 @@
 $(document).ready(function() {
     
-    /*Diese Daten mŸssen angepasst werden*/
+    /*Diese Daten mÅ¸ssen angepasst werden*/
     var username = "mfanafuthi";
-    var repname = "mfanafuthi.github.io";
-    var branch = "master"
+    var repname = "mfanafuthi.github.io/oph";
+    var branch = "gh-pages"
     var cover = "Title"
     var tableOfContent="Table of Content"
     
-    /*SeitenrŠnder PDF in mm*/
+    /*SeitenrÅ nder PDF in mm*/
     var startY=25;
     var endY=270;
     var startX=25
