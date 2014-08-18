@@ -346,13 +346,18 @@ $(document).ready(function() {
             lines=textSize-lines;
             lines=lines/fontsize*mmToPt;
             lines=Math.floor(lines);
+            if(lines<0){
+                lines=0;
+            }
             for(i=0; i<lines; i++){
+                console.log(i);
                 doc.text(startX, y, textArray[i])
                 y=y+fontsize*mmToPt;
             }
             doc.addPage();
             y=startY;
             for(i=lines; i<textArray.length; i++){
+                console.log(i);
                 doc.text(startX, y, textArray[i])
                 y=y+fontsize*mmToPt;
             }
