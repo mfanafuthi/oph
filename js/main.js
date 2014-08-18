@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
-    /*Diese Daten mŸssen angepasst werden*/
+    /*Diese Daten müssen angepasst werden*/
     var username = "mfanafuthi";
     var repname = "oph";
     var branch = "gh-pages"
     var cover = "Title"
     var tableOfContent="Table of Content"
 
-    /*SeitenrŠnder PDF in mm*/
+    /*Seitenränder PDF in mm*/
     var startY=25;
     var endY=270;
     var startX=25
@@ -15,7 +15,7 @@ $(document).ready(function() {
     var mmToPt=0.3527;
     /*feste Variablen*/
     var titleUrl = "book/"+cover+".md"
-    var url = "https://api.github.com/repos/"+username+"/"+repname+"/contents/book?ref="+branch;
+    var apiUrl = "https://api.github.com/repos/"+username+"/"+repname+"/contents/book?ref="+branch;
     var showdown = new Showdown.converter();
     $(".tocTitle").append("<h5>"+tableOfContent+"</h5>");
     var theContent = [];
@@ -61,7 +61,7 @@ $(document).ready(function() {
     });
 
     /*lade alle Daten*/
-    $.getJSON(url,function(result){
+    $.getJSON(apiUrl,function(result){
         $.each(result, function (key, data) {
             var string = data["name"];
             var n = string.length;
