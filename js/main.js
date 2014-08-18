@@ -1,21 +1,13 @@
 $(document).ready(function() {
-
-<<<<<<< HEAD
-    /*Diese Daten m√ºssen angepasst werden*/
-=======
-    /*Diese Daten mÔøΩssen angepasst werden*/
->>>>>>> gh-pages
-    var username = "mfanafuthi";
-    var repname = "oph";
-    var branch = "gh-pages"
-    var cover = "Title"
-    var tableOfContent="Table of Content"
-
-<<<<<<< HEAD
-    /*Seitenr√§nder PDF in mm*/
-=======
-    /*SeitenrÔøΩnder PDF in mm*/
->>>>>>> gh-pages
+    
+    /*Diese Daten müssen angepasst werden*/
+    var username = "mfanafuthi"; /*Benutzername bei Github*/
+    var repname = "oph"; /*Repositoryname*/
+    var branch = "gh-pages"; /*Branchname. Bei Projektpages bleibt gh-pages, für user oder Organisationsseite empfiehlt sich master*/
+    var cover = "Title"; /*Dateiname der Markdownfile, die das Cover des Buches enthält*/
+    var tableOfContent="Table of Content"; /*Überschrift des Inhaltsverzeichnisses*/
+    
+    /*Seitenränder PDF in mm*/
     var startY=25;
     var endY=270;
     var startX=25
@@ -23,7 +15,7 @@ $(document).ready(function() {
     var mmToPt=0.3527;
     /*feste Variablen*/
     var titleUrl = "book/"+cover+".md"
-    var apiUrl = "https://api.github.com/repos/"+username+"/"+repname+"/contents/book?ref="+branch;
+    var url = "https://api.github.com/repos/"+username+"/"+repname+"/contents/book?ref="+branch;
     var showdown = new Showdown.converter();
     $(".tocTitle").append("<h5>"+tableOfContent+"</h5>");
     var theContent = [];
@@ -32,8 +24,7 @@ $(document).ready(function() {
     var ul=false;
     var listnumber;
     arrayBilder=[];
-
-
+    
     /*lade Title Seite. title.Md*/
     $.ajax({
         url : titleUrl,
@@ -45,7 +36,8 @@ $(document).ready(function() {
             $(".zweiDrittel").append("<div class='content chapter0'>"+preview_content+"</div>");
             theContent.push(preview_content);
             $(".chapter0").fadeIn();
-
+            document.title = title;
+            
         },
         error : function () {
             $.getJSON(url,function(result){
@@ -60,16 +52,18 @@ $(document).ready(function() {
                         $(".zweiDrittel").append("<div class='content chapter0'>"+preview_content+"</div>");
                         theContent.push(preview_content);
                         $(".chapter0").fadeIn();
+                        document.title = title;
                     }
                 });
             });
-
+            
         }
-
+        
+        
     });
-
+    
     /*lade alle Daten*/
-    $.getJSON(apiUrl,function(result){
+    $.getJSON(url,function(result){
         $.each(result, function (key, data) {
             var string = data["name"];
             var n = string.length;
@@ -82,7 +76,7 @@ $(document).ready(function() {
                     success : function (data) {
                         var preview_content = showdown.makeHtml(data);
                         $(".zweiDrittel").append("<div class='content chapter"+theContent.length+"'>"+preview_content+"</div>");
-
+                        
                         title = $(preview_content).first().filter('h1').text();
                         $(".toc").append("<p><a class='link' data-link=chapter"+theContent.length+">"+title+"</a></p>");
                         theContent.push(preview_content);
@@ -90,6 +84,7 @@ $(document).ready(function() {
                 });
             }
         })
+        imageRepair();
         var nav = responsiveNav(".toc", { // Selector
             animate: true, // Boolean: Use CSS3 transitions, true or false
             transition: 284, // Integer: Speed of the transition, in milliseconds
@@ -106,25 +101,25 @@ $(document).ready(function() {
             close: function(){} // Function: Close callback
     });
     });
-
+    
     /*Click durch die einzelnen Kapitel*/
     $(document).on("click", ".link", function(){
         var dom=$(this).data( "link" );
         $(".content").fadeOut(100);
         $("."+dom).delay(300).fadeIn()
     });
-
+    
     /*Pdf erstellen*/
     $(document).on("click", "#download", function(){
-
+        
         /*Schritt 1 ALle Bilder zu URLs*/
         zaehlerBilder=0;
-
+        
         $("img").each(function() {
             var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
             var imageObj = new Image();
-
+        
             imageObj.onload = function() {
                 canvas.height=imageObj.height
                 canvas.width=imageObj.width
@@ -134,40 +129,40 @@ $(document).ready(function() {
                 //console.log(data);
                 callback(data, sizeY);
             };
-
+            
             var callback = function (data, sizeY) {
                 arrayBilder.push(data, sizeY)
                 zaehlerBilder=zaehlerBilder+1;
-
+                
                 canvas.remove();
-
+                
                 if(zaehlerBilder==$("img").length){
                     makePDF();
                 }
-
+                
             }
-
+            
             imageObj.src = $(this).attr("src");;
-
+             
         });
     });
-
+    
     /*PDF zusammenschreiben*/
     function makePDF(){
         y=startY
         zaehlerBilder2=0;
-
+        
         if ($(theContent[0]).find("img").length > 0){
             imgless = theContent[0].replace(/<img[^>]*>/g,"<div class=imgplaceholder></div>");
             imgless=imgless.split("<div class=imgplaceholder></div>");
             imgs=$(theContent[0]).find("img")
-
+            
             for (v=0; v<imgless.length; v++){
                 doc.fromHTML(imgless[v],startX,startY,{
                     'width': endX,
                     'elementHandlers': specialElementHandlers
                 });
-
+                
                 if(v+1!=imgless.length){
                     a=zaehlerBilder2*2;
                     b=a+1;
@@ -189,7 +184,7 @@ $(document).ready(function() {
             'width': endX,
             'elementHandlers': specialElementHandlers
         });
-
+        
         for(q=1; q<theContent.length; q++){
             doc.addPage();
             y=startY;
@@ -197,13 +192,13 @@ $(document).ready(function() {
                 imgless = theContent[q].replace(/<img[^>]*>/g,"<div class=imgplaceholder></div>");
                 imgless=imgless.split("<div class=imgplaceholder></div>");
                 imgs=$(theContent[q]).find("img")
-
+                
                 for (f=0; f<imgless.length; f++){
                     doc.fromHTML(imgless[f],startX,startY,{
                         'width': endX,
                         'elementHandlers': specialElementHandlers
                     });
-
+                    
                     if(f+1!=imgless.length){
                         a=zaehlerBilder2*2;
                         b=a+1;
@@ -221,11 +216,11 @@ $(document).ready(function() {
                });
             }
         }
-
+        
         //doc.save(repname+".pdf");
         doc.output('datauri');
     }
-
+    
     //Form der einzelnen Parts
     var specialElementHandlers = {
         'H1': function(element, renderer){
@@ -302,7 +297,7 @@ $(document).ready(function() {
             doc.setFont("helvetica");
             doc.setFontSize(12)
             doc.setFontStyle('normal')
-
+            
             neuertext=doc.splitTextToSize($(element).text(), endX)
             pageLi(12, neuertext);
             y=y+4*mmToPt;
@@ -318,7 +313,7 @@ $(document).ready(function() {
             ol=false
             return false;
         },
-
+        
         'BLOCKQUOTE': function(element, renderer){
             //doc.text(startX-6.5, y,"blockquote");
             startX=startX+20;
@@ -337,11 +332,11 @@ $(document).ready(function() {
             doc.setFontStyle('normal')
             neuertext=doc.splitTextToSize($(element).text(), endX-20)
             pageCode(10, neuertext);
-
+            
             return true;
         }
     };
-
+    
     function page(fontsize, textArray){
         fontsize=fontsize*1.2;
         fullSize=y+fontsize*textArray.length*mmToPt;
@@ -362,12 +357,12 @@ $(document).ready(function() {
                 y=y+fontsize*mmToPt;
             }
         }else{
-
+            
             doc.text(startX, y, textArray)
             y=fullSize;
         }
     }
-
+    
     function pageCode(fontsize, textArray){
         fontsize=fontsize*1.2;
         fullSize=y+fontsize*textArray.length*mmToPt+20;
@@ -382,7 +377,7 @@ $(document).ready(function() {
             y=fullSize;
         }
     }
-
+    
     function pageLi(fontsize, textArray){
         fontsize=fontsize*1.2;
         fullSize=y+fontsize*textArray.length*mmToPt;
@@ -428,5 +423,18 @@ $(document).ready(function() {
             doc.text(startX, y, textArray)
             y=fullSize;
         }
+    }
+    
+    function imageRepair(){
+        $("img").each(function() {  
+        imgsrc = $(this).attr('src');
+       
+        if(imgsrc.search("../")==0){
+            imgsrc=imgsrc.replace("../","");
+            $(this).attr('src', imgsrc);
+            
+        }
+        
+    });
     }
 });
