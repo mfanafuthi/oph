@@ -1,5 +1,6 @@
-#Cyberworksiegel
+#OPH - Offene pädagogische Handreichung
 
-Herausgeber: blabliublu
+Herausgeber: mfanafuthi  
+Jahr: 2014
 
-![Titelbild](../images/title.jpg)
+![Titelbild](../images/Beispielbild.jpg)
