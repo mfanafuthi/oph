@@ -1,13 +1,21 @@
 $(document).ready(function() {
 
+<<<<<<< HEAD
     /*Diese Daten müssen angepasst werden*/
+=======
+    /*Diese Daten m�ssen angepasst werden*/
+>>>>>>> gh-pages
     var username = "mfanafuthi";
     var repname = "oph";
     var branch = "gh-pages"
     var cover = "Title"
     var tableOfContent="Table of Content"
 
+<<<<<<< HEAD
     /*Seitenränder PDF in mm*/
+=======
+    /*Seitenr�nder PDF in mm*/
+>>>>>>> gh-pages
     var startY=25;
     var endY=270;
     var startX=25
