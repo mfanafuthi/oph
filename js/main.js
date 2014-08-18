@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     /*Diese Daten m�ssen angepasst werden*/
     var username = "mfanafuthi";
-    var repname = "ohp";
+    var repname = "oph";
     var branch = "gh-pages"
     var cover = "Title"
     var tableOfContent="Table of Content"
